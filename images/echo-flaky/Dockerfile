@@ -1,0 +1,19 @@
+FROM python:3.12-slim
+
+ARG BUILD_SHA=dev
+ARG BUILD_TIME=dev
+
+ENV BUILD_SHA=$BUILD_SHA
+ENV BUILD_TIME=$BUILD_TIME
+ENV PORT=8080
+
+# defaults (override via env in manifests)
+ENV STARTUP_DELAY_SECONDS=0
+ENV READY_FAIL_PERCENT=0
+ENV FAIL_PERCENT=0
+
+WORKDIR /app
+COPY app/ /app
+
+EXPOSE 8080
+CMD ["python", "-u", "server.py"]

@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+
+ARG BUILD_SHA=dev
+ARG BUILD_TIME=dev
+
+ENV BUILD_SHA=$BUILD_SHA
+ENV BUILD_TIME=$BUILD_TIME
+ENV PORT=8080
+
+WORKDIR /app
+COPY app/ /app
+
+EXPOSE 8080
+CMD ["python", "-u", "server.py"]
