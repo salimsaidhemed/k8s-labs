@@ -162,7 +162,7 @@ If anything here feels fuzzy — do not move on.
 
 ## What Comes Next (do not start yet)
 
-LAB 02 — ReplicaSets and Deployments
+### LAB 02 — ReplicaSets and Deployments
 - Why controllers exist
 - ReplicaSet vs Deployment
 - Declarative state
