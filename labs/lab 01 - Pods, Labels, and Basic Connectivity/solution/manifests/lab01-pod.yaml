@@ -5,6 +5,7 @@ metadata:
   namespace: lab01-ns
   labels:
     app: lab01-app
+    env: lab
 spec:
   containers:
     - name: echo-info

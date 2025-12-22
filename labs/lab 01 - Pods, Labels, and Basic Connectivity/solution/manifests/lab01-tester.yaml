@@ -5,6 +5,7 @@ metadata:
   namespace: lab01-ns
   labels:
     app: http-tester
+    env: lab
 spec:
   containers:
     - name: http-tester
