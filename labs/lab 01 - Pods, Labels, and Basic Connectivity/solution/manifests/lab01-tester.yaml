@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: http-tester
+  namespace: lab01-ns
+  labels:
+    app: http-tester
+spec:
+  containers:
+    - name: http-tester
+      image: ghcr.io/salimsaidhemed/k8s-labs/http-tester:latest
