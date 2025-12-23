@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab02-deployment
+  namespace: lab02-ns
+  labels:
+    app: lab02-app
+    env: lab
+spec:
+  replicas: 2
+  selector:
+    matchlabels:
+      app: lab02-app
+  template:
+    metadata:
+      namespace: lab02-ns
+      labels:
+        app: lab02-app
+        env: lab
+    spec:
+      containers:
+        - name: echo-info
+          image: ghcr.io/salimsaidhemed/k8s-labs/echo-info:latest
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
