@@ -1,0 +1,47 @@
+# Backup and Restore etcd
+## 1. Get the values of:
+	client-urls 
+	cert-file
+	ca-file
+	key-file
+from /etc/kubernetes/manifests/etcd.yaml or from kubectl describe deployment etcd-controlplane -n kube-system
+
+--listen-client-urls=https://127.0.0.1:2379
+--cert-file=/etc/kubernetes/pki/etcd/server.crt
+--trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+--key-file=/etc/kubernetes/pki/etcd/server.key
+
+## 2. Run Snaspshot command
+
+ETCDUTIL_API=3 etcdctl snapshot save /opt/snapshot-pre-boot.db \
+--cacert="/etc/kubernetes/pki/etcd/ca.crt" \
+--cert="/etc/kubernetes/pki/etcd/server.crt" \
+--endpoints=https://127.0.0.1:2379 \
+--key="/etc/kubernetes/pki/etcd/server.key"
+
+## 3. verify snapshot 
+
+ETCDUTIL_API=3 etcdutl snapshot verify /opt/snapshot-pre-boot.db
+
+## 4. Stop etcd static pod by moving /etc/kubernetes/manifests/etcd.yaml -> /tmp/etcd.yaml
+
+## 5. move etcd directory from /var/lib/etcd to /tmp/etcd
+
+## 6. Run Restore
+
+ETCDUTL_API=3 etcdctl snapshot restore /opt/snapshot-pre-boot.db \
+--cacert="/etc/kubernetes/pki/etcd/ca.crt" \
+--cert="/etc/kubernetes/pki/etcd/server.crt" \
+--endpoints=https://127.0.0.1:2379 \
+--key="/etc/kubernetes/pki/etcd/server.key" \
+--data-dir=/var/lib/etcd
+
+## 7. move the etcd manifest from /tmp back to /etc/kubernetes/manifests
+## 8. use crictl ps to check status of system pods etcd should be back
+## 9. verify if all the resources have been restored kubectl get all --all-namespaces
+
+
+
+
+
+
